@@ -1,11 +1,10 @@
 const elementoParaInserirLivros = document.getElementById('livros');
+const somaDoValorDosLivros = document.getElementById("valor");
 
 function exibirLivrosNaTela(listaDeLivros){
    elementoParaInserirLivros.innerHTML ="";
-
     listaDeLivros.forEach((livro)=>{
-        const quantidadeD2Livros = livro.quantidade === 0 ? 'indisponivel': '';
-        
+        const quantidadeD2Livros = verificaDisponibilidade(livro);
         elementoParaInserirLivros.innerHTML +=`
         <div class="livro">
             <img class="livro__imagens ${quantidadeD2Livros}" src="${livro.imagem}" alt="${livro.alt}" />
@@ -17,6 +16,12 @@ function exibirLivrosNaTela(listaDeLivros){
             </div>
         </div>
     `
-    })
+    });
+
+    let somaDeLivros = listaDeLivros.reduce((acc,livro) => acc + livro.preco , 0);
+    somaDoValorDosLivros.innerHTML = somaDeLivros.toFixed(2);
 };
  
+function verificaDisponibilidade(livro) {
+  return livro.quantidade === 0 ? 'indisponivel' : '';
+}
